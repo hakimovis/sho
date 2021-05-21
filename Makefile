@@ -1,3 +1,3 @@
 .PHONY: annotate
 annotate:
-	bundle exec annotate -p after app/models/*
+	bundle exec annotate -p after --models
