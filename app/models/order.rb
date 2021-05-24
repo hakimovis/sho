@@ -2,10 +2,35 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :line_items
 
-  state_machine :status, initial: :new do
-    event :completed do
-      transition all => :completed
+  state_machine :status, initial: :draft do
+    event :ready_for_processing do
+      transition :draft => :ready_for_processing
     end
+
+    event :waiting_for_payment do
+      transition :draft => :waiting_for_payment
+    end
+
+    event :paid do
+      transition :waiting_for_payment => :ready_for_processing
+    end
+
+    event :processing_in_progress do
+      transition :ready_for_processing => :in_progress
+    end
+
+    event :completed do
+      transition :in_progress => :completed
+    end
+
+    event :awaiting_item_availability do
+      transition :in_progress => :awaiting_item_availability
+    end
+
+    event :declined do
+      transition all - [:completed, :declined] => :declined
+    end
+
   end
 
 end
