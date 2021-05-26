@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::V1::AbstractController
   def create
-    creator = UseCases::Users::Create.new(params.permit(resource_attributes), notificators: [UserMailer])
+    creator = UseCases::Users::Create.new(params.permit(resource_attributes))
     result = creator.call
 
     return render_success if result

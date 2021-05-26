@@ -13,6 +13,16 @@ class Api::V1::CheckoutController < Api::V1::AbstractController
     render_checkout_result(creator.order)
   end
 
+  def update
+    order = Order.find(params.require(:order_id))
+
+    return render_error :not_found unless order.waiting_for_payment?
+
+    OrderPaymentJob.perform_later(order.id)
+
+    render_success
+  end
+
   def render_checkout_result(order)
     order_data = compile_order_data(order)
     checkout_status = order.valid? ? :accepted : :declined

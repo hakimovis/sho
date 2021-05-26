@@ -7,6 +7,10 @@ module ApiV1Helpers
     api_call(:post, command, params)
   end
 
+  def api_update(command, params = {})
+    api_call(:put, command, params)
+  end
+
   def api_call(method, command, params)
     send(method, "/api/v1/#{command}", params: params)
   end

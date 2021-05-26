@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [:create, :show]
       resources :items, only: :index
-      resources :checkout, only: [:create]
+      resources :checkout #, only: [:create, :update]
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

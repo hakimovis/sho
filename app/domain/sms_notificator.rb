@@ -1,9 +1,15 @@
 class SmsNotificator
   class << self
-    def user_created(user)
-      msg = "User created at SHO: #{user.short_info_str}"
-      Rails.logger.info("We send the most real SMS")
+    def call(user, text)
+      send_sms(user.phone, text)
+    end
+
+    private
+
+    def send_sms(msisdn, text)
+      Rails.logger.info("Sending SMS with text #{text.inspect} to #{msisdn}")
       sleep 1
+      true
     end
   end
 end

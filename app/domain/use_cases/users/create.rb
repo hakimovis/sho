@@ -1,18 +1,18 @@
 module UseCases
   module Users
     class Create
-      attr_reader :attrs, :notificators, :user
+      attr_reader :attrs, :user
 
-      def initialize(attrs, notificators: [UserMailer])
+      def initialize(attrs)
         @attrs = attrs
-        @notificators = notificators
       end
 
       def call
         result = user.save
         return false unless result
 
-        notificators.each { |n| n.user_created(user) }
+        UseCases::Users::Notificator.new(user).user_created
+
         true
       end
 

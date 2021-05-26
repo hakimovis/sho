@@ -16,6 +16,10 @@ class LineItem < ApplicationRecord
 
     errors.add :formalized, :shortage unless item.stock_count >= count
   end
+
+  def amount
+    item.price * count
+  end
 end
 
 # == Schema Information

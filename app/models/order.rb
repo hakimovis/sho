@@ -3,10 +3,6 @@ class Order < ApplicationRecord
   has_many :line_items
 
   state_machine :status, initial: :draft do
-    event :ready_for_processing do
-      transition :draft => :ready_for_processing
-    end
-
     event :waiting_for_payment do
       transition :draft => :waiting_for_payment
     end
@@ -30,9 +26,11 @@ class Order < ApplicationRecord
     event :declined do
       transition all - [:completed, :declined] => :declined
     end
-
   end
 
+  def total_amount
+    line_items.map(&:amount).sum
+  end
 end
 
 # == Schema Information
