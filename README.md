@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Clone repo, run `bundle install`, roll migrations, blah blah blah...
+Run sidekiq:
 
-Things you may want to cover:
+```
+bundle exec sidekiq -C config/sidekiq.yml
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Run server:
+```
+bundle exec unicorn_rails -c config/unicorn.rb -E production
+```
